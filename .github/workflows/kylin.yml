@@ -15,7 +15,7 @@ jobs:
         run: |
           apt-get update
           apt-get install -y \
-          git make wget \
+          git make gcc g++ clang \
           libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev \
           libboost-program-options-dev libboost-locale-dev libboost-iostreams-dev \
           libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
