@@ -26,6 +26,7 @@ jobs:
           libsquish-dev libfmt-dev
 
       - name: Install cmake
+        shell: bash
         run: |
           git clone https://github.com/Kitware/CMake.git --depth=1 --single-branch -b v3.24.4
           cd CMake
@@ -42,6 +43,7 @@ jobs:
       #    # apt-get install -y cmake make g++ clang libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev zlib1g-dev libavformat-dev libswscale-dev libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev libboost-locale-dev libboost-iostreams-dev qt6-base-dev qt6-base-dev-tools qt6-tools-dev qt6-tools-dev-tools qt6-l10n-tools qt6-svg-dev libtbb-dev libluajit-5.1-dev liblzma-dev libsqlite3-dev libminizip-dev libsquish-dev libfmt-dev ninja-build ccache
       #    apt-get install -y cmake make g++ clang libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev zlib1g-dev libavformat-dev libswscale-dev libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev libboost-locale-dev libboost-iostreams-dev libtbb-dev libluajit-5.1-dev liblzma-dev libsqlite3-dev libminizip-dev libsquish-dev libfmt-dev ninja-build ccache
       - name: Build
+        shell: bash
         run: |
           ONNXRUNTIME_URL=https://github.com/microsoft/onnxruntime/releases/download/v1.18.1/onnxruntime-linux-x64-1.18.1.tgz
           ONNXRUNTIME_ROOT=/opt/onnxruntime
