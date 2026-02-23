@@ -13,13 +13,25 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          apt-get update && apt-get install -y git wget cmake make g++ clang libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev zlib1g-dev libavformat-dev libswscale-dev libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev libboost-locale-dev libboost-iostreams-dev libtbb-dev libluajit-5.1-dev liblzma-dev libsqlite3-dev libminizip-dev libsquish-dev libfmt-dev ninja-build ccache libxkbcommon-x11-0 libxcb-icccm4
+          apt-get update
+          apt-get install \
+          git make wget \
+          libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev \
+          libboost-program-options-dev libboost-locale-dev libboost-iostreams-dev \
+          libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+          qtbase5-dev qtbase5-dev-tools qttools5-dev qttools5-dev-tools \
+          libqt5svg5-dev \
+          ninja-build zlib1g-dev libavformat-dev libswscale-dev libtbb-dev \
+          libluajit-5.1-dev libminizip-dev libfuzzylite-dev libsqlite3-dev \
+          libsquish-dev libfmt-dev
 
-      - name: Install Qt6
+      - name: Install cmake
         run: |
-          wget https://download.qt.io/official_releases/online_installers/qt-online-installer-linux-arm64-online.run
-          chmod +x qt-online-installer-linux-arm64-online.run
-          ./qt-online-installer-linux-arm64-online.run --platform minimal
+          git clone https://github.com/Kitware/CMake.git --depth=1 --single-branch -b v3.24.4
+          cd Cmake
+          ./configure
+          make -j$(nproc)
+          make install
 
       - name: Checkout
         uses: actions/checkout@v4
