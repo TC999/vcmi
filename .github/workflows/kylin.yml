@@ -12,7 +12,7 @@ jobs:
       DBUS_SESSION_BUS_ADDRESS: /dev/null
     steps:
       - name: Upgrade Git
-        run: apt-get update && apt-get install -y git cmake make g++ clang libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev zlib1g-dev libavformat-dev libswscale-dev libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev libboost-locale-dev libboost-iostreams-dev libtbb-dev libluajit-5.1-dev liblzma-dev libsqlite3-dev libminizip-dev libsquish-dev libfmt-dev ninja-build ccache libxkbcommon-x11-0
+        run: apt-get update && apt-get install -y git wget cmake make g++ clang libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev zlib1g-dev libavformat-dev libswscale-dev libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev libboost-locale-dev libboost-iostreams-dev libtbb-dev libluajit-5.1-dev liblzma-dev libsqlite3-dev libminizip-dev libsquish-dev libfmt-dev ninja-build ccache libxkbcommon-x11-0
 
       - name: Checkout
         uses: actions/checkout@v4
