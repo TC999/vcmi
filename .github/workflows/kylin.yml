@@ -28,7 +28,7 @@ jobs:
       - name: Install cmake
         run: |
           git clone https://github.com/Kitware/CMake.git --depth=1 --single-branch -b v3.24.4
-          cd Cmake
+          cd CMake
           ./configure
           make -j$(nproc)
           make install
