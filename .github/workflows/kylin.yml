@@ -49,7 +49,7 @@ jobs:
           ONNXRUNTIME_ROOT=/opt/onnxruntime
           mkdir -p "$ONNXRUNTIME_ROOT"
           curl -fsSL "$ONNXRUNTIME_URL" | tar -xzv --strip-components=1 -C "$ONNXRUNTIME_ROOT"
-          sudo ldconfig "$ONNXRUNTIME_ROOT"
+          ldconfig "$ONNXRUNTIME_ROOT"
           mkdir build
           cd build
           cmake ..
