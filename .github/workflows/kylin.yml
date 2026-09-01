@@ -1,0 +1,56 @@
+name: 银河麒麟V10
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04-arm
+    container:
+      image: ubuntu:20.04
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      DBUS_SESSION_BUS_ADDRESS: /dev/null
+    steps:
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y \
+          git make gcc g++ clang libssl-dev curl \
+          libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev \
+          libboost-program-options-dev libboost-locale-dev libboost-iostreams-dev \
+          libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+          qtbase5-dev qtbase5-dev-tools qttools5-dev qttools5-dev-tools \
+          libqt5svg5-dev \
+          ninja-build zlib1g-dev libavformat-dev libswscale-dev libtbb-dev \
+          libluajit-5.1-dev libminizip-dev libfuzzylite-dev libsqlite3-dev \
+          libsquish-dev libfmt-dev liblzma-dev doxygen
+
+      - name: Install cmake
+        shell: bash
+        run: |
+          git clone https://github.com/Kitware/CMake.git --depth=1 --single-branch -b v3.24.4
+          cd CMake
+          ./configure
+          make -j$(nproc)
+          make install
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      #- name: Install dependencies
+      #  run: |
+      #    # apt-get install -y cmake make g++ clang libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev zlib1g-dev libavformat-dev libswscale-dev libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev libboost-locale-dev libboost-iostreams-dev qt6-base-dev qt6-base-dev-tools qt6-tools-dev qt6-tools-dev-tools qt6-l10n-tools qt6-svg-dev libtbb-dev libluajit-5.1-dev liblzma-dev libsqlite3-dev libminizip-dev libsquish-dev libfmt-dev ninja-build ccache
+      #    apt-get install -y cmake make g++ clang libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev zlib1g-dev libavformat-dev libswscale-dev libboost-dev libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev libboost-locale-dev libboost-iostreams-dev libtbb-dev libluajit-5.1-dev liblzma-dev libsqlite3-dev libminizip-dev libsquish-dev libfmt-dev ninja-build ccache
+      - name: Build
+        shell: bash
+        run: |
+          ONNXRUNTIME_URL=https://github.com/microsoft/onnxruntime/releases/download/v1.18.1/onnxruntime-linux-x64-1.18.1.tgz
+          ONNXRUNTIME_ROOT=/opt/onnxruntime
+          mkdir -p "$ONNXRUNTIME_ROOT"
+          curl -fsSL "$ONNXRUNTIME_URL" | tar -xzv --strip-components=1 -C "$ONNXRUNTIME_ROOT"
+          ldconfig "$ONNXRUNTIME_ROOT"
+          mkdir build
+          cd build
+          cmake ..
+          make -j$(nproc)

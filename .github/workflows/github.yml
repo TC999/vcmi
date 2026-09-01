@@ -6,6 +6,8 @@ on:
       - beta
       - master
       - develop
+    paths-ignore:
+      - '.github/workflows/kylin.yml'
   pull_request:
   workflow_dispatch:
 
